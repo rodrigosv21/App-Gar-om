@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">App garcom</string>
+
+    <string name="txt_boas_vindas">Garçom App</string>
+
+    <string name="txt_sugestao">Acesse sua conta para continuar</string>
+
+    <string name="txt_campo_gmail">Email</string>
+
+    <string name="txt_campo_senha">Senha</string>
+
+    <string name="txt_sugestao_senha">Lembrar login</string>
+
+    <string name="btn_entrar">Entrar</string>
+
+    <string name="btn_esquecer_senha">Esqueceu a senha?</string>
+
+    <string name="txt_sugestao_cadastrar">Não tem uma conta?</string>
+
+    <string name="btn_registrar">Registre-se</string>
+
+    <string name="btn_suporte">Fale com suporte</string>
+
+    <string name="txt_versao">Versão: 1.0.0</string>
+
+</resources>
