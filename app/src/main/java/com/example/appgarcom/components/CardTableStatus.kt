@@ -10,12 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.appgarcom.constants.MesaConstants
+import androidx.compose.ui.res.stringResource
+import com.example.appgarcom.type.TableStatus
 
 @Composable
-fun CardStatusMesa(
-    statusMesaConstants: MesaConstants,
+fun CardTableStatus(
+    tableStatus: TableStatus,
 ) {
     Row(
         modifier = Modifier,
@@ -23,7 +23,7 @@ fun CardStatusMesa(
     ) {
         RadioButton(
             colors = RadioButtonColors(
-                selectedColor = SelectStateColor(statusMesaConstants),
+                selectedColor = SelectStateColor(tableStatus),
                 unselectedColor = Color.White,
                 disabledSelectedColor = Color.White,
                 disabledUnselectedColor = Color.White
@@ -33,33 +33,30 @@ fun CardStatusMesa(
         )
 
         Text(
-            text = statusMesaConstants.toString(),
+            text = stringResource(tableStatus.resId),
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
 
 @SuppressLint("ComposableNaming")
 @Composable
-private fun SelectStateColor(statusMesaConstants: MesaConstants): Color {
+private fun SelectStateColor(statusMesaConstants: TableStatus): Color {
     return when (statusMesaConstants) {
-        MesaConstants.PENDENTE -> {
+        TableStatus.PENDING -> {
             MaterialTheme.colorScheme.onSurface
         }
-        MesaConstants.OCUPADA -> {
+
+        TableStatus.OCCUPIED -> {
             MaterialTheme.colorScheme.error
         }
-        MesaConstants.RESERVADA -> {
+
+        TableStatus.RESERVED -> {
             MaterialTheme.colorScheme.tertiary
         }
+
         else -> {
             MaterialTheme.colorScheme.secondary
         }
     }
-}
-
-@Preview
-@Composable
-private fun CardStatusMesaPreview() {
-    CardStatusMesa(statusMesaConstants = MesaConstants.PENDENTE)
-
 }

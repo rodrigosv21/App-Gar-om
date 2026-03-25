@@ -41,38 +41,37 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.appgarcom.R
-import com.example.appgarcom.components.CampoTexto
+import com.example.appgarcom.components.CustomOutlinedTextField
+import com.example.appgarcom.navigation.AppRoutes
 
 @Composable
-fun LoginView(navController: NavController = rememberNavController()) {
-
-    var gmail by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
-    var lembrarLogin by remember { mutableStateOf(true) }
+fun LoginView(navController: NavController) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var rememberLogin by remember { mutableStateOf(false) }
 
     Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
-
         Text(
-            text = stringResource(R.string.txt_boas_vindas),
+            text = stringResource(R.string.txt_welcome_message),
             color = MaterialTheme.colorScheme.primary,
             fontSize = 34.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(R.string.txt_sugestao),
+            text = stringResource(R.string.txt_login_prompt),
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -85,51 +84,52 @@ fun LoginView(navController: NavController = rememberNavController()) {
                     MaterialTheme.colorScheme.surface,
                     shape = RoundedCornerShape(16.dp)
                 )
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
-                CampoTexto(
-                    value = gmail,
-                    onValueChange = { gmail = it },
-                    placeholder = stringResource(R.string.txt_campo_gmail),
+                CustomOutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    placeholder = stringResource(R.string.txt_email_field),
                     keyboardType = KeyboardType.Email,
-                    leadinIcon = Icons.Default.Email
+                    leadingIcon = Icons.Default.Email,
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                CampoTexto(
-                    value = senha,
-                    onValueChange = { senha = it },
-                    placeholder = stringResource(R.string.txt_campo_senha),
+                CustomOutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    placeholder = stringResource(R.string.txt_password_field),
                     keyboardType = KeyboardType.Password,
-                    leadinIcon = Icons.Default.Lock,
-                    isPassword = true
+                    leadingIcon = Icons.Default.Lock,
+                    isPassword = true,
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Switch(
-                        checked = lembrarLogin,
-                        onCheckedChange = { lembrarLogin = it },
+                        checked = rememberLogin,
+                        onCheckedChange = { rememberLogin = it },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
                             checkedTrackColor = MaterialTheme.colorScheme.primary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.surface
+                            uncheckedTrackColor = MaterialTheme.colorScheme.surface,
                         )
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        stringResource(R.string.txt_sugestao_senha),
-                        color = MaterialTheme.colorScheme.onSurface
+                        text = stringResource(R.string.txt_remember_login),
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
 
@@ -137,20 +137,20 @@ fun LoginView(navController: NavController = rememberNavController()) {
 
                 Button(
                     onClick = {
-                        navController.navigate("home")
+                        navController.navigate(AppRoutes.HOME_VIEW.route)
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
-                    )
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
                 ) {
                     Text(
-                        text = stringResource(R.string.btn_entrar),
+                        text = stringResource(R.string.btn_login),
                         fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onPrimary
+                        color = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
 
@@ -158,28 +158,28 @@ fun LoginView(navController: NavController = rememberNavController()) {
 
                 TextButton(onClick = { }) {
                     Text(
-                        text = stringResource(R.string.btn_esquecer_senha),
+                        text = stringResource(R.string.btn_forgot_password),
                         fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = stringResource(R.string.txt_sugestao_cadastrar),
+                        text = stringResource(R.string.txt_no_account_prompt),
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
                     TextButton(onClick = { }) {
                         Text(
-                            text = stringResource(R.string.btn_registrar),
+                            text = stringResource(R.string.btn_register),
                             fontSize = 16.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     }
                 }
@@ -196,7 +196,7 @@ fun LoginView(navController: NavController = rememberNavController()) {
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                stringResource(R.string.btn_suporte),
+                stringResource(R.string.btn_support),
                 color = MaterialTheme.colorScheme.onBackground
             )
         }
@@ -204,9 +204,9 @@ fun LoginView(navController: NavController = rememberNavController()) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(R.string.txt_versao),
+            text = stringResource(R.string.txt_version),
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
@@ -214,5 +214,5 @@ fun LoginView(navController: NavController = rememberNavController()) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun LoginPreview() {
-    LoginView()
+    LoginView(navController = rememberNavController())
 }

@@ -8,43 +8,38 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.appgarcom.constants.MesaConstants
+import com.example.appgarcom.type.TableStatus
 
 @Composable
-fun CardMesa(
-    nMesa: Int,
-    mesaConstants: MesaConstants,
-    status: MesaConstants,
+fun CardTable(
+    tableNumber: Int,
+    tableStatus: TableStatus,
+    status: TableStatus,
     click: () -> Unit
 ) {
 
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorScheme.surfaceVariant
+        ),
+        border = when (status) {
+            TableStatus.AVAILABLE -> BorderStroke(2.dp, colorScheme.secondary)
+            TableStatus.OCCUPIED -> BorderStroke(2.dp, colorScheme.error)
+            TableStatus.RESERVED -> BorderStroke(2.dp, colorScheme.tertiary)
+            else -> BorderStroke(2.dp, colorScheme.onSurface)
+        },
         modifier = Modifier
             .size(100.dp, 100.dp)
             .clickable(onClick = click),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-        border = when (status) {
-            MesaConstants.LIVRE -> BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
-            MesaConstants.OCUPADA -> BorderStroke(2.dp, MaterialTheme.colorScheme.error)
-            MesaConstants.RESERVADA -> BorderStroke(
-                2.dp,
-                MaterialTheme.colorScheme.tertiary
-            )
-
-            else -> BorderStroke(2.dp, MaterialTheme.colorScheme.onSurface)
-        }
     ) {
         Column(
             modifier = Modifier
@@ -53,26 +48,15 @@ fun CardMesa(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "$nMesa",
+                text = "$tableNumber",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = colorScheme.onSurfaceVariant
             )
             Text(
-                text = mesaConstants.toString(),
+                text = stringResource(tableStatus.resId),
             )
         }
     }
 }
 
-@Preview
-@Composable
-private fun CardMesaPreview() {
-    CardMesa(
-        nMesa = 1,
-        mesaConstants = MesaConstants.LIVRE,
-        status = MesaConstants.LIVRE,
-        click = {}
-    )
-
-}
